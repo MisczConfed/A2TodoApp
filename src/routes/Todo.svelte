@@ -6,6 +6,15 @@
     let todoItem = $state('');
     let todoList = $state([]);
 
+    const colorTags = [
+        { name: 'None', value: 'none', color: '#efe9e3' },
+        { name: 'Red', value: 'red', color: '#ff6b6b' },
+        { name: 'Yellow', value: 'yellow', color: '#ffd93d' },
+        { name: 'Green', value: 'green', color: '#6bcf7f' },
+        { name: 'Blue', value: 'blue', color: '#4d96ff' },
+        { name: 'Purple', value: 'purple', color: '#c77dff' }
+    ];
+
     onMount(() => {
         // Load saved todoList from localStorage if available
         const savedList = localStorage.getItem('savedList');
@@ -26,7 +35,8 @@
         }
         todoList = [...todoList, {
             text: todoItem,
-            done: false
+            done: false,
+            color: 'none'
         }];
         updateList();
         todoItem = '';
@@ -78,9 +88,18 @@
     <div class="todo-list">
         <ul>
             {#each todoList as item, index}
-                <li>
-                    <input type="checkbox" bind:checked={item.done} onchange={updateList}>&nbsp; &#128394;
-                    <span contenteditable="true" class:done={item.done}>{item.text}</span>
+                <li data-color={item.color}>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <input type="checkbox" bind:checked={item.done} onchange={updateList}>&nbsp; &#128394;
+                            <select bind:value={item.color} onchange={updateList} class="color-tag">
+                                {#each colorTags as tag}
+                                    <option value={tag.value}>{tag.name}</option>
+                                {/each}
+                            </select>
+                            <span contenteditable="true" class:done={item.done}>{item.text}</span>
+                        </div>
+                    </div>
                     <button type="button" onclick={() => removeItem(index)}>&times;</button>
                 </li>
             {/each}
@@ -107,7 +126,7 @@
         border-radius: 10px;
         padding: 8px;
         background-color: rgb(239, 233, 227);
-        border: rgb(217, 207, 199) solid 4px;
+        border: #d9cfc7 solid 4px;
         font-family: "Sour Gummy", sans-serif;
         font-size: 18px;
         margin: 2px;
@@ -126,8 +145,8 @@
         width: 35vw;
         border-radius: 10px;
         padding: 8px;
-        background-color: rgb(217, 207, 199);
-        border: solid 4px rgb(239, 233, 227);
+        background-color: #d9cfc7;
+        border: solid 4px #efe9e3;
         margin: 2px;
     }
     
@@ -182,15 +201,94 @@
         background-color: rgb(217, 207, 199);
     }
 
+    .color-tag {
+        margin: 0 5px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 2px solid #d9cfc7;
+        background-color: rgb(239, 233, 227);
+        color: rgb(124, 105, 82);
+        font-family: "Sour Gummy", sans-serif;
+        cursor: pointer;
+    }
+
+    .item-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .item-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .item-header input[type="checkbox"] {
+        margin-right: 0;
+    }
+
+    .item-header span {
+        flex: 1;
+    }
+
+    .item-header input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
     li {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
         background-color: rgb(239, 233, 227);
         border: rgb(217, 207, 199) solid 4px;
+        border-left: 8px solid transparent;
         padding: 10px;
         border-radius: 10px;
         margin-bottom: 5px;
         color: rgb(124, 105, 82);
         font-family: "Sour Gummy", sans-serif;
-        
+    }
+
+    li[data-color="red"] {
+        border-left-color: #ff6b6b;
+    }
+
+    li:hover[data-color="red"] {
+        border-left-color: #ff6b6b;
+    }
+    
+
+    li[data-color="yellow"] {
+        border-left-color: #ffd93d;
+    }
+
+    li:hover[data-color="yellow"] {
+        border-left-color: #ffd93d;
+    }
+
+    li[data-color="green"] {
+        border-left-color: #6bcf7f;
+    }
+
+    li:hover[data-color="green"] {
+        border-left-color: #6bcf7f;
+    }
+
+    li[data-color="blue"] {
+        border-left-color: #4d96ff;
+    }
+
+    li:hover[data-color="blue"] {
+        border-left-color: #4d96ff;
+    }
+
+    li[data-color="purple"] {
+        border-left-color: #c77dff;
+    }
+
+    li:hover[data-color="purple"] {
+        border-left-color: #c77dff;
     }
 
     li:hover {
@@ -198,6 +296,11 @@
         border: solid 4px rgb(239, 233, 227);
     }
     
+    li span {
+        width: auto;
+        outline: none;
+    }
+
     li span.done {
         text-decoration: line-through;
         color: grey;
