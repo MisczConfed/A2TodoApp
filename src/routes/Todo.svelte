@@ -114,15 +114,22 @@
 
 
 <style>
+    /* Layout form responsive */
     form {
         text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        padding: 8px 6px;
     }
 
-    form input {
-        width: 35vw;
+    /* input grows on wide screens, shrinks on small screens */
+    form input[type="text"] {
+        flex: 1 1 320px;
+        min-width: 140px;
+        max-width: 60vw;
         border-radius: 10px;
         padding: 8px;
         background-color: rgb(239, 233, 227);
@@ -130,7 +137,7 @@
         font-family: "Sour Gummy", sans-serif;
         font-size: 18px;
         margin: 2px;
-        
+        box-sizing: border-box;
     }
 
     form input:focus[type="text"] {
@@ -142,44 +149,46 @@
     }
 
     form input:hover {
-        width: 35vw;
         border-radius: 10px;
         padding: 8px;
         background-color: #d9cfc7;
         border: solid 4px #efe9e3;
         margin: 2px;
     }
-    
+
+    /* Make the todo list container flexible and responsive */
     .todo-list {
-        width: 41vw;
-        margin: auto;
+        width: 95%;
+        max-width: 680px;
+        margin: 12px auto;
+        padding: 0 8px;
+        box-sizing: border-box;
     }
 
     ul {
         list-style: none;
         padding: 0;
+        margin: 0;
     }
 
-    li input[type="checkbox"] {
-        height: 15px;
-        width: 15px;
+    /* Larger touch-friendly checkboxes */
+    li input[type="checkbox"],
+    .allBtn input[type="checkbox"] {
+        height: 20px;
+        width: 20px;
         accent-color: plum;
-        padding-left: 5px;  
     }
 
-    div input[type="checkbox"] {
-        height: 15px;
-        width: 15px;
-        accent-color: plum;
-        margin: 0; 
-    }
-
+    /* Buttons */
     button[type="button"] {
         color: rgb(124, 105, 82);
         float: right;
         border-radius: 10px;
         border-color: white;
+        padding: 6px 8px;
+        background: transparent;
     }
+
     button[type="submit"] {
         height: 45px;
         width: 45px;
@@ -189,7 +198,6 @@
         color: rgb(124, 105, 82);
         margin: 2px;
         outline: none;
-        
     }
 
     button:hover[type="submit"] {
@@ -201,112 +209,83 @@
         background-color: rgb(217, 207, 199);
     }
 
+    /* Color select */
     .color-tag {
-        margin: 0 5px;
-        padding: 5px;
-        border-radius: 5px;
+        margin: 0 4px;
+        padding: 6px 8px;
+        border-radius: 6px;
         border: 2px solid #d9cfc7;
         background-color: rgb(239, 233, 227);
         color: rgb(124, 105, 82);
         font-family: "Sour Gummy", sans-serif;
         cursor: pointer;
+        font-size: 14px;
     }
 
-    .item-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .item-header {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .item-header input[type="checkbox"] {
-        margin-right: 0;
-    }
-
-    .item-header span {
-        flex: 1;
-    }
-
-    .item-header input[type="checkbox"] {
-        margin-right: 8px;
-    }
-
+    /* Item layout: place checkbox, select and text on one row */
     li {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         background-color: rgb(239, 233, 227);
         border: rgb(217, 207, 199) solid 4px;
         border-left: 8px solid transparent;
         padding: 10px;
         border-radius: 10px;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
         color: rgb(124, 105, 82);
         font-family: "Sour Gummy", sans-serif;
+        gap: 8px;
+        box-sizing: border-box;
     }
 
-    li[data-color="red"] {
-        border-left-color: #ff6b6b;
+    /* Container holding checkbox + select + text so they stay aligned */
+    .item-content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1 1 auto;
+        min-width: 0; /* allow children to shrink properly */
     }
 
-    li:hover[data-color="red"] {
-        border-left-color: #ff6b6b;
-    }
-    
-
-    li[data-color="yellow"] {
-        border-left-color: #ffd93d;
-    }
-
-    li:hover[data-color="yellow"] {
-        border-left-color: #ffd93d;
+    /* Header row that holds the controls and text inline */
+    .item-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1 1 auto;
+        min-width: 0;
     }
 
-    li[data-color="green"] {
-        border-left-color: #6bcf7f;
-    }
-
-    li:hover[data-color="green"] {
-        border-left-color: #6bcf7f;
-    }
-
-    li[data-color="blue"] {
-        border-left-color: #4d96ff;
-    }
-
-    li:hover[data-color="blue"] {
-        border-left-color: #4d96ff;
-    }
-
-    li[data-color="purple"] {
-        border-left-color: #c77dff;
-    }
-
-    li:hover[data-color="purple"] {
-        border-left-color: #c77dff;
-    }
-
-    li:hover {
-        background-color: rgb(217, 207, 199);
-        border: solid 4px rgb(239, 233, 227);
-    }
-    
+    /* allow span to shrink and wrap on small screens */
+    .item-header span,
     li span {
-        width: auto;
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-wrap: anywhere;
         outline: none;
+        font-size: 16px;
+        line-height: 1.2;
     }
 
     li span.done {
         text-decoration: line-through;
         color: grey;
-    
     }
 
+    /* Colored left border based on tag */
+    li[data-color="red"] { border-left-color: #ff6b6b; }
+    li[data-color="yellow"] { border-left-color: #ffd93d; }
+    li[data-color="green"] { border-left-color: #6bcf7f; }
+    li[data-color="blue"] { border-left-color: #4d96ff; }
+    li[data-color="purple"] { border-left-color: #c77dff; }
+
+    li:hover {
+        background-color: rgb(217, 207, 199);
+        border: solid 4px rgb(239, 233, 227);
+    }
+
+    /* Interface delete button */
     .interface button#delete[type="button"] {
         height: 45px;
         width: 45px;
@@ -320,12 +299,6 @@
         outline: none;
     }
 
-    .interface button#delete:hover[type="button"] {
-        background-color: rgb(217, 207, 199);
-        border: solid 4px rgb(239, 233, 227);
-    }
-    
-
     .allBtn {
         height: 38px;
         width: 38px;
@@ -337,24 +310,46 @@
         margin: 2px;
         font-size: large;
         align-content: center;
-        
-        input[type="checkbox"] {
-            margin-top: 5px;
+    }
+
+    /* ----------------------
+       Responsive breakpoints
+       ---------------------- */
+
+    /* Small phones and narrow screens */
+    @media (max-width: 600px) {
+        form input[type="text"] {
+            flex-basis: 100%;
+            max-width: 100%;
+            font-size: 16px;
         }
 
-        input:focus {
-            outline: none;
-        }   
+        button[type="submit"] {
+            height: 40px;
+            width: 40px;
+        }
+
+        .color-tag {
+            padding: 6px;
+            font-size: 13px;
+        }
+
+        li {
+            padding: 10px 8px;
+            gap: 6px;
+        }
+
+        .item-header span {
+            font-size: 15px;
+        }
     }
 
-    .allBtn:hover {
-        background-color: rgb(217, 207, 199);
-        border: solid 4px rgb(239, 233, 227);    
+    /* Very small / compact devices */
+    @media (max-width: 380px) {
+        button[type="submit"] { height: 38px; width: 38px; }
+        .interface button#delete[type="button"] { height: 40px; width: 40px; }
+        .color-tag { font-size: 12px; padding: 5px; }
+        li { padding: 8px; }
+        li span { font-size: 14px; }
     }
-
-    .allBtn:focus {
-        outline: none;
-    }
-
-
 </style>
