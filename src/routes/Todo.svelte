@@ -114,7 +114,7 @@
 
 
 <style>
-    /* Layout form responsive */
+
     form {
         text-align: center;
         display: flex;
@@ -125,7 +125,7 @@
         padding: 8px 6px;
     }
 
-    /* input grows on wide screens, shrinks on small screens */
+
     form input[type="text"] {
         flex: 1 1 320px;
         min-width: 140px;
@@ -156,7 +156,7 @@
         margin: 2px;
     }
 
-    /* Make the todo list container flexible and responsive */
+
     .todo-list {
         width: 95%;
         max-width: 680px;
@@ -171,7 +171,7 @@
         margin: 0;
     }
 
-    /* Larger touch-friendly checkboxes */
+
     li input[type="checkbox"],
     .allBtn input[type="checkbox"] {
         height: 20px;
@@ -179,7 +179,7 @@
         accent-color: plum;
     }
 
-    /* Buttons */
+
     button[type="button"] {
         color: rgb(124, 105, 82);
         float: right;
@@ -209,7 +209,6 @@
         background-color: rgb(217, 207, 199);
     }
 
-    /* Color select */
     .color-tag {
         margin: 0 4px;
         padding: 6px 8px;
@@ -222,7 +221,7 @@
         font-size: 14px;
     }
 
-    /* Item layout: place checkbox, select and text on one row */
+  
     li {
         display: flex;
         align-items: center;
@@ -239,16 +238,16 @@
         box-sizing: border-box;
     }
 
-    /* Container holding checkbox + select + text so they stay aligned */
+
     .item-content {
         display: flex;
         align-items: center;
         gap: 8px;
         flex: 1 1 auto;
-        min-width: 0; /* allow children to shrink properly */
+        min-width: 0; 
     }
 
-    /* Header row that holds the controls and text inline */
+   
     .item-header {
         display: flex;
         align-items: center;
@@ -257,7 +256,7 @@
         min-width: 0;
     }
 
-    /* allow span to shrink and wrap on small screens */
+
     .item-header span,
     li span {
         flex: 1 1 auto;
@@ -273,7 +272,7 @@
         color: grey;
     }
 
-    /* Colored left border based on tag */
+  
     li[data-color="red"] { border-left-color: #ff6b6b; }
     li[data-color="yellow"] { border-left-color: #ffd93d; }
     li[data-color="green"] { border-left-color: #6bcf7f; }
@@ -285,7 +284,6 @@
         border: solid 4px rgb(239, 233, 227);
     }
 
-    /* Interface delete button */
     .interface button#delete[type="button"] {
         height: 45px;
         width: 45px;
@@ -312,11 +310,7 @@
         align-content: center;
     }
 
-    /* ----------------------
-       Responsive breakpoints
-       ---------------------- */
 
-    /* Small phones and narrow screens */
     @media (max-width: 600px) {
         form input[type="text"] {
             flex-basis: 100%;
@@ -344,7 +338,7 @@
         }
     }
 
-    /* Very small / compact devices */
+
     @media (max-width: 380px) {
         button[type="submit"] { height: 38px; width: 38px; }
         .interface button#delete[type="button"] { height: 40px; width: 40px; }
